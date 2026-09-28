@@ -1,8 +1,27 @@
+from itertools import product
+
 import pytest
 from attrs import define, fields, validators
 from attr._make import _CountingAttr
 
-from csm.models.utils import reuse, create_field, convert_if_allowable_type
+from csm.models.utils import reuse, create_field, convert_if_allowable_type, make_name_variations, VALID_SOURCES, VALID_YEARS, VALID_BASIS
+
+
+@pytest.mark.unit
+def test_make_name_variations(subtests):
+    """Test ``make_name_variations`` for the existence of the following forms.
+
+    For the 2015, 2020, and 2021 models:
+
+    - 1 x class-name based
+    - 2 x year-based: int or str
+    - 4 x basis and year-based: "land-2015", "2015 land"
+    - 8 x source and year-based: "NLR 2015", "2015-nlr"
+    """
+    expected_length = 15
+    for source, basis, year in product(VALID_SOURCES, VALID_BASIS, VALID_YEARS):
+        variations = make_name_variations(source=source, basis=basis, year=year)
+        assert len(variations) == expected_length
 
 
 @pytest.mark.unit

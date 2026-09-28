@@ -9,6 +9,53 @@ from attrs import Attribute, field, converters, validators
 from attr._make import attrib
 
 
+VALID_SOURCES = ("NLR", )
+VALID_YEARS = (2015, 2020, 2021)
+VALID_BASIS = ("land", )
+VALID_MODELS = ("2015LandNLR", "2020LandNLR", "2021LandNLR")
+
+
+def make_name_variations(*, source: str = "NLR", basis: str = "land", year: int | str = 2015) -> tuple[str, ...]:
+    """Creates a series of standard name patters that can be recognized from user inputs
+    taking the following forms where :py:attr:`source` = "NLR", :py:attr:`basis` = "land",
+    and :py:attr:`year` = 2015.
+
+    Acceptable variations:
+    
+        - model class name: "Land2015NLR"
+        - year-only: 2015 or "2015" (only accepted for 2015, 2020, and 2021)
+        - source and year combinations (only accepted for 2015, 2020, and 2021) separated by a space
+          or dash: "NLR-2015", "2015-NLR"
+        - basis and year combinations separated by a space or dash: "land-2015", "2015-land"
+
+    Args:
+        source (str): The abbreviated name of the source, such as NLR. Currently only
+            accepts "NLR".
+        basis (str): Land-based, ("land"), fixed-bottom offshore wind ("fosw"), or floating offshore
+            wind ("flosw"). Currently only accepts "land".
+        year (int | str): The year of the model's basis. Must be one of 2015, 2020, or 2021.
+
+    Returns:
+        tuple: A tuple of name combinations as outlined in the description.
+    """
+    if source.upper() not in VALID_SOURCES:
+        raise ValueError(f"'source' must be one of {VALID_SOURCES}, not: {source}")
+    year = int(year)
+    if int(year) not in VALID_YEARS:
+        raise ValueError(f"'year' must be one of {VALID_YEARS}, not: {source}")
+    if basis.lower() not in VALID_BASIS:
+        raise ValueError(f"'basis' must be one of {VALID_BASIS}, not: {source}")
+
+    variants = [str(year), int(year), f"{basis.title()}{year}{source.upper()}"]
+    for sep in ("-", " "):
+        variants.extend([f"{basis.lower()}{sep}{year}", f"{year}{sep}{basis.lower()}"])
+        variants.extend([f"{source.lower()}{sep}{year}", f"{source.upper()}{sep}{year}"])
+        variants.extend([f"{year}{sep}{source.lower()}", f"{year}{sep}{source.upper()}"])
+
+    return variants
+
+
+
 def convert_if_allowable_type(value: Any, target: type, allowable: type | tuple[type]) -> Any:
     """Converts the type of :py:attr:`value` to the :py:attr:`target` type if it is one of an
     :py:attr:`allowable` type. If :py:attr:`value` is already the correct type, or is not of an
