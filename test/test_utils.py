@@ -13,12 +13,11 @@ def test_make_name_variations(subtests):
 
     For the 2015, 2020, and 2021 models:
 
-    - 1 x class-name based
     - 2 x year-based: int or str
     - 4 x basis and year-based: "land-2015", "2015 land"
     - 8 x source and year-based: "NLR 2015", "2015-nlr"
     """
-    expected_length = 15
+    expected_length = 14
     for source, basis, year in product(VALID_SOURCES, VALID_BASIS, VALID_YEARS):
         variations = make_name_variations(source=source, basis=basis, year=year)
         assert len(variations) == expected_length

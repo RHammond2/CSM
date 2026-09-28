@@ -8,11 +8,12 @@ import networkx as nx
 from attrs import Attribute, field, converters, validators
 from attr._make import attrib
 
+from csm.models.base import AVAILABLE_MODELS
+
 
 VALID_SOURCES = ("NLR", )
 VALID_YEARS = (2015, 2020, 2021)
 VALID_BASIS = ("land", )
-VALID_MODELS = ("2015LandNLR", "2020LandNLR", "2021LandNLR")
 
 
 def make_name_variations(*, source: str = "NLR", basis: str = "land", year: int | str = 2015) -> tuple[str, ...]:
@@ -22,7 +23,6 @@ def make_name_variations(*, source: str = "NLR", basis: str = "land", year: int 
 
     Acceptable variations:
     
-        - model class name: "Land2015NLR"
         - year-only: 2015 or "2015" (only accepted for 2015, 2020, and 2021)
         - source and year combinations (only accepted for 2015, 2020, and 2021) separated by a space
           or dash: "NLR-2015", "2015-NLR"
@@ -46,7 +46,7 @@ def make_name_variations(*, source: str = "NLR", basis: str = "land", year: int 
     if basis.lower() not in VALID_BASIS:
         raise ValueError(f"'basis' must be one of {VALID_BASIS}, not: {source}")
 
-    variations = [str(year), int(year), f"{basis.title()}{year}{source.upper()}"]
+    variations = [str(year), int(year)]
     for sep in ("-", " "):
         variations.extend([f"{basis.lower()}{sep}{year}", f"{year}{sep}{basis.lower()}"])
         variations.extend([f"{source.lower()}{sep}{year}", f"{source.upper()}{sep}{year}"])
