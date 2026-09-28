@@ -484,8 +484,9 @@ def test_get_attr_map():
         _io: {name: {"type": meta["type"], "default": meta["default"]} for name, meta in vals.items()}
         for _io, vals in separate_attr_map.items()
     }
-    assert separate_attr_map == CSMBase._get_attr_map(both_as_separate=True, include_units=False, include_type=True)
-    
+    res = CSMBase._get_attr_map(both_as_separate=True, include_units=False, include_type=True)
+    assert separate_attr_map == res
+
     # Test for default only
     separate_attr_map = {
         _io: {name: meta["default"] for name, meta in vals.items()}
