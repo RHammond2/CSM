@@ -2791,7 +2791,7 @@ class CSMBase(metaclass=FieldsMeta):
 
     @classmethod
     def _get_attr_map(
-        cls, *, both_as_separate: bool = False, include_units: bool = False
+        cls, *, both_as_separate: bool = False, include_units: bool = False, include_type: bool = False,
     ) -> dict[str, Any]:
         """Creates an dictionary attribute mapping of model attribute name to either default value
         or a dictionary of default value and units (when :py:attr:`include_units` is True). Use of
@@ -2805,12 +2805,15 @@ class CSMBase(metaclass=FieldsMeta):
                 False.
             include_units (bool, optional): Include the attribute's units in the attribute's values
                 or just the default value (False). Defaults to False.
+            include_type (bool, optional): Include the attribute's type in the attribute's values
+                or just the default value (False). Defaults to False.
 
         Returns:
             dict[str, Any]: Dictionary of "inputs", "outputs", and optionally "both (when
                 :py:attr:`both_as_separate` is True). Each of the corresponding dictionaries will
                 have keys of model attribute name and values of either the default value or a
-                dictionary of "default" and "units" with their respective values.
+                dictionary of "default" with either "units", "type", or both with their respective
+                values.
         """
         attr_map = {"inputs": {}, "outputs": {}}
         if both_as_separate:
@@ -2821,7 +2824,10 @@ class CSMBase(metaclass=FieldsMeta):
                 continue
             name = f.name
             default = f.default
-            val = {"default": default, "units": meta["units"]} if include_units else default
+            units_val = {"units": meta["units"]} if include_units else {}
+            type_val = {"type": f.type} if include_type else {}
+            extras = units_val | type_val
+            val = {"default": default} | extras if extras else default
             match _io:
                 case "input":
                     attr_map["inputs"][name] = val

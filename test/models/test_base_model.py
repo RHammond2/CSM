@@ -451,7 +451,7 @@ def test_fields_dict():
 def test_get_attr_map():
     """Tests :py:meth:`CSMBase._get_attr_map`."""
     metadata_by_name = {
-        f.name: {"io": f.metadata.get("io"), "units": f.metadata.get("units"), "default": f.default}
+        f.name: {"io": f.metadata.get("io"), "units": f.metadata.get("units"), "type": f.type, "default": f.default}
         for f in fields(CSMBase)
         if "io" in f.metadata
     }
@@ -473,10 +473,20 @@ def test_get_attr_map():
                 combined_attr_map["inputs"][name] = meta
                 combined_attr_map["outputs"][name] = meta
 
-    assert separate_attr_map == CSMBase._get_attr_map(both_as_separate=True, include_units=True)
-    assert combined_attr_map == CSMBase._get_attr_map(both_as_separate=False, include_units=True)
+    res = CSMBase._get_attr_map(both_as_separate=True, include_units=True, include_type=True)
+    assert separate_attr_map == res
 
-    # Drop units
+    res = CSMBase._get_attr_map(both_as_separate=False, include_units=True, include_type=True)
+    assert combined_attr_map == res
+
+    # Test for one of type and units
+    separate_attr_map = {
+        _io: {name: {"type": meta["type"], "default": meta["default"]} for name, meta in vals.items()}
+        for _io, vals in separate_attr_map.items()
+    }
+    assert separate_attr_map == CSMBase._get_attr_map(both_as_separate=True, include_units=False, include_type=True)
+    
+    # Test for default only
     separate_attr_map = {
         _io: {name: meta["default"] for name, meta in vals.items()}
         for _io, vals in separate_attr_map.items()
