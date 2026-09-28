@@ -18,6 +18,7 @@ import pandas as pd
 import networkx as nx
 from attrs import Attribute, field, define, fields, validators
 
+from csm.models.base import FieldsMeta
 from csm.models.utils import (
     create_field,
     get_dependent_attributes,
@@ -297,9 +298,8 @@ TRANSPORT_RESULT_NAMES = (
     "transport_cost",
 )
 
-
 @define
-class CSMBase:
+class CSMBase(metaclass=FieldsMeta):
     r"""Base cost and scaling model that defines universally required inputs and calculations.
 
     Args:
