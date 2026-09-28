@@ -1,4 +1,5 @@
-from csm.models import CSMBase, Land2015NLR, Land2020NLR, Land2021NLR, available_models
+from csm.models import CSMBase, Land2015NLR, Land2020NLR, Land2021NLR
+from csm.models.base import AVAILABLE_MODELS
 from csm.models.utils import make_name_variations
 
 
@@ -22,6 +23,8 @@ def get_model(name: str | int) -> type[CSMBase]:
     Returns:
         Type[CSMBase]: The ``CSMBase`` model or one of its subclasses.
     """
+    if (model := AVAILABLE_MODELS.get(name)) is not None:
+        return model
     if name in ("base", "CSMBase"):
         return CSMBase
     if name in make_name_variations(source="nlr", basis="land", year=2015):
