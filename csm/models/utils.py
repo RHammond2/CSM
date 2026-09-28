@@ -46,13 +46,13 @@ def make_name_variations(*, source: str = "NLR", basis: str = "land", year: int 
     if basis.lower() not in VALID_BASIS:
         raise ValueError(f"'basis' must be one of {VALID_BASIS}, not: {source}")
 
-    variants = [str(year), int(year), f"{basis.title()}{year}{source.upper()}"]
+    variations = [str(year), int(year), f"{basis.title()}{year}{source.upper()}"]
     for sep in ("-", " "):
-        variants.extend([f"{basis.lower()}{sep}{year}", f"{year}{sep}{basis.lower()}"])
-        variants.extend([f"{source.lower()}{sep}{year}", f"{source.upper()}{sep}{year}"])
-        variants.extend([f"{year}{sep}{source.lower()}", f"{year}{sep}{source.upper()}"])
+        variations.extend([f"{basis.lower()}{sep}{year}", f"{year}{sep}{basis.lower()}"])
+        variations.extend([f"{source.lower()}{sep}{year}", f"{source.upper()}{sep}{year}"])
+        variations.extend([f"{year}{sep}{source.lower()}", f"{year}{sep}{source.upper()}"])
 
-    return variants
+    return variations
 
 
 
