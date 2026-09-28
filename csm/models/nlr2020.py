@@ -4,6 +4,7 @@ import numpy as np
 from attrs import define, fields
 
 from csm.models.utils import create_field
+from csm.models.base import register
 from csm.models.base_model import CSMBase
 
 
@@ -123,6 +124,7 @@ COST_RESULT_NAMES = (
 
 
 @define
+@register("Land2020NLR")
 class Land2020NLR(CSMBase):
     r"""NLR 2020 empirically-based model based on updated data and feedback since the
     original and 2015 models.

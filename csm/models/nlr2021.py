@@ -3,6 +3,7 @@
 from attrs import define, fields
 
 from csm.models.utils import create_field
+from csm.models.base import register
 from csm.models.nlr2020 import Land2020NLR
 
 
@@ -10,6 +11,7 @@ base = fields(Land2020NLR)
 
 
 @define
+@register("Land2021NLR")
 class Land2021NLR(Land2020NLR):
     r"""NLR 2021 empirically-based model used for development of the IRS Safe Harbor tables.
 

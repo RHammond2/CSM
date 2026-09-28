@@ -2,6 +2,7 @@
 
 from attrs import define, fields
 
+from csm.models.base import register
 from csm.models.base_model import CSMBase
 
 
@@ -9,6 +10,7 @@ base = fields(CSMBase)
 
 
 @define
+@register("Land2015NLR")
 class Land2015NLR(CSMBase):
     r"""Replication of the original Excel-based CSM model created in 2006 and modified in 2015 with
     updates for land-based turbines in 2015. Scaling factor updates from 2020 and 2024 made in the
