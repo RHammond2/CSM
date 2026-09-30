@@ -33,4 +33,4 @@ def get_model(name: str | int) -> type[CSMBase]:
         return Land2020NLR
     if name in make_name_variations(source="nlr", basis="land", year=2021):
         return Land2021NLR
-    raise NotImplementedError(f"'{name}' is invalid, use one of: {available_models}.")
+    raise NotImplementedError(f"'{name}' is invalid, use one of: {AVAILABLE_MODELS}.")
