@@ -12,8 +12,6 @@ def register(name):
     return make_available
 
 
-
-
 class FieldsMeta(type):
     """Metaclass providing the :py:attr:`fields` and :py:attr:`fields_dict` as class properties."""
     @property
