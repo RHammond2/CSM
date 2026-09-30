@@ -540,7 +540,7 @@ class CSMBase(metaclass=FieldsMeta):
     turbine_class: int = create_field(
         int, "unitless", "input", additional_validators=[validators.gt(0)]
     )
-    rated_power_kw: int = create_field(int, "kW", "input", additional_validators=[validators.gt(0)])
+    rated_power_kw: int = create_field(float, "kW", "input", additional_validators=[validators.gt(0)])
     rotor_diameter: float = create_field(
         float, "m", "input", additional_validators=[validators.gt(0)]
     )
@@ -613,7 +613,7 @@ class CSMBase(metaclass=FieldsMeta):
 
     # main bearing
     bearing_mass_coeff: float = create_field(float, "unitless", "input")
-    bearing_mass_exp: float = create_field(float, "units", "input")
+    bearing_mass_exp: float = create_field(float, "unitless", "input")
     bearing_mass_cost_coeff: float = create_field(float, "USD/kg", "input")
     bearing_mass: float = create_field(
         float, "kg", "both", additional_validators=[validators.ge(0)]
