@@ -298,6 +298,7 @@ TRANSPORT_RESULT_NAMES = (
     "transport_cost",
 )
 
+
 @define
 class CSMBase(metaclass=FieldsMeta):
     r"""Base cost and scaling model that defines universally required inputs and calculations.
@@ -540,7 +541,9 @@ class CSMBase(metaclass=FieldsMeta):
     turbine_class: int = create_field(
         int, "unitless", "input", additional_validators=[validators.gt(0)]
     )
-    rated_power_kw: int = create_field(float, "kW", "input", additional_validators=[validators.gt(0)])
+    rated_power_kw: int = create_field(
+        float, "kW", "input", additional_validators=[validators.gt(0)]
+    )
     rotor_diameter: float = create_field(
         float, "m", "input", additional_validators=[validators.gt(0)]
     )
@@ -2791,7 +2794,11 @@ class CSMBase(metaclass=FieldsMeta):
 
     @classmethod
     def _get_attr_map(
-        cls, *, both_as_separate: bool = False, include_units: bool = False, include_type: bool = False,
+        cls,
+        *,
+        both_as_separate: bool = False,
+        include_units: bool = False,
+        include_type: bool = False,
     ) -> dict[str, Any]:
         """Creates an dictionary attribute mapping of model attribute name to either default value
         or a dictionary of default value and units (when :py:attr:`include_units` is True). Use of

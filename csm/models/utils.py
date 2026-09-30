@@ -8,21 +8,21 @@ import networkx as nx
 from attrs import Attribute, field, converters, validators
 from attr._make import attrib
 
-from csm.models.base import AVAILABLE_MODELS
 
-
-VALID_SOURCES = ("NLR", )
+VALID_SOURCES = ("NLR",)
 VALID_YEARS = (2015, 2020, 2021)
-VALID_BASIS = ("land", )
+VALID_BASIS = ("land",)
 
 
-def make_name_variations(*, source: str = "NLR", basis: str = "land", year: int | str = 2015) -> tuple[str, ...]:
+def make_name_variations(
+    *, source: str = "NLR", basis: str = "land", year: int | str = 2015
+) -> tuple[str, ...]:
     """Creates a series of standard name patters that can be recognized from user inputs
     taking the following forms where :py:attr:`source` = "NLR", :py:attr:`basis` = "land",
     and :py:attr:`year` = 2015.
 
     Acceptable variations:
-    
+
         - year-only: 2015 or "2015" (only accepted for 2015, 2020, and 2021)
         - source and year combinations (only accepted for 2015, 2020, and 2021) separated by a space
           or dash: "NLR-2015", "2015-NLR"
@@ -53,7 +53,6 @@ def make_name_variations(*, source: str = "NLR", basis: str = "land", year: int 
         variations.extend([f"{year}{sep}{source.lower()}", f"{year}{sep}{source.upper()}"])
 
     return variations
-
 
 
 def convert_if_allowable_type(value: Any, target: type, allowable: type | tuple[type]) -> Any:

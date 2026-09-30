@@ -3,8 +3,8 @@
 import numpy as np
 from attrs import define, fields
 
-from csm.models.utils import create_field
 from csm.models.base import register
+from csm.models.utils import create_field
 from csm.models.base_model import CSMBase
 
 

@@ -4,7 +4,15 @@ import pytest
 from attrs import define, fields, validators
 from attr._make import _CountingAttr
 
-from csm.models.utils import reuse, create_field, convert_if_allowable_type, make_name_variations, VALID_SOURCES, VALID_YEARS, VALID_BASIS
+from csm.models.utils import (
+    VALID_BASIS,
+    VALID_YEARS,
+    VALID_SOURCES,
+    reuse,
+    create_field,
+    make_name_variations,
+    convert_if_allowable_type,
+)
 
 
 @pytest.mark.unit

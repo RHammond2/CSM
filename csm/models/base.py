@@ -4,16 +4,20 @@
 
 AVAILABLE_MODELS = {}
 
+
 def register(name):
     """Register a class and its string name in ``AVAILABLE_MODELS``."""
+
     def make_available(cls):
         AVAILABLE_MODELS[name] = cls
         return cls
+
     return make_available
 
 
 class FieldsMeta(type):
     """Metaclass providing the :py:attr:`fields` and :py:attr:`fields_dict` as class properties."""
+
     @property
     def fields(cls):
         """Enables ``Model.fields`` in place of ``attrs.fields(Model)`` for easy of attribute data

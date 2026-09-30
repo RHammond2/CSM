@@ -1,11 +1,8 @@
-from itertools import product
-
 import pytest
-from attrs import define, field, fields, fields_dict, validators
-from attr._make import _CountingAttr
+from attrs import field, define, fields, validators, fields_dict
 
-from csm.models.base import AVAILABLE_MODELS, FieldsMeta
 from csm import Land2015NLR, Land2020NLR, Land2021NLR
+from csm.models.base import AVAILABLE_MODELS, FieldsMeta
 
 
 @pytest.mark.unit
@@ -26,6 +23,7 @@ class Demo(metaclass=FieldsMeta):
     a: int = field()
     b: str = field(default=12, converter=str, validator=validators.instance_of(str))
     c: float = field(default=1.23, init=False)
+
 
 @pytest.mark.unit
 def test_FieldsMeta():
