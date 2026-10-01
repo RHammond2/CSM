@@ -53,7 +53,7 @@ class Land2015NLR(CSMBase):
         rated_power_kw (float): Turbine rated power (:math:`kW`).
         rotor_diameter (float): Diameter of the swept area of the turbine blades (:math:`m`).
         turbine_class (int): Turbine classification; use 1 for IEC Wind-Class I, 2 for
-            IEC Wind-Class II or III.
+            IEC Wind-Class II or III. Defaults to 1.
         num_bearings (int): Number of main bearings.
         max_tip_speed (float): Maximum allowable blade tip speed (:math:`m/s`).
         tower_length (float): For onshore turbines, this is the hub height (total length above
