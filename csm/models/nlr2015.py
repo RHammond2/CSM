@@ -59,7 +59,7 @@ class Land2015NLR(CSMBase):
         tower_length (float): For onshore turbines, this is the hub height (total length above
             ground). For offshore turbines, this is length from transition piece to hub height
             (:math:`m`).
-        blade_has_carbon (bool): Use True if the blade has carbon, False if not.
+        blade_has_carbon (bool): Use True if the blade has carbon, False if not. Defaults to False.
         blade_mass_coeff (float): :math:`k` in the blade mass equation from
             :py:meth:`calculate_blade_mass`. Defaults to 0.5.
         blade_mass_cost_coeff (float): Blade cost per kilogram (:math:`USD/kg`). Defaults to 14.6.
@@ -276,6 +276,8 @@ class Land2015NLR(CSMBase):
 
     efficiency_max = base.efficiency_max.reuse(default=1.0)
     blade_mass_coeff = base.blade_mass_coeff.reuse(default=0.5)
+    blade_has_carbon = base.blade_has_carbon.reuse(default=False)
+    turbine_class = base.turbine_class.reuse(default=1)
     blade_mass_cost_coeff = base.blade_mass_cost_coeff.reuse(default=14.6)
     hub_mass_coeff = base.hub_mass_coeff.reuse(default=2.3)
     hub_mass_intercept = base.hub_mass_intercept.reuse(default=1320.0)
